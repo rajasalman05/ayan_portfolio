@@ -1,0 +1,1 @@
+web: gunicorn ayan_portfolio.wsgi:application

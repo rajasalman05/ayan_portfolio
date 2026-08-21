@@ -1,0 +1,238 @@
+{% extends "portfolio/base.html" %}
+{% load static %}
+{% block content %}
+
+<nav class="nav">
+  <div class="wrap">
+    <a href="#top" class="brand"><span class="dot"></span> {{ profile.full_name|default:"ayan.abbasi" }}</a>
+    <div class="nav-links">
+      <a href="#about">about</a>
+      <a href="#skills">skills</a>
+      <a href="#education">education</a>
+      <a href="#projects">projects</a>
+      <a href="#contact">contact</a>
+    </div>
+    {% if profile.cv_file %}
+      <a href="{{ profile.cv_file.url }}" class="nav-cta" download>Download CV</a>
+    {% else %}
+      <a href="#contact" class="nav-cta">Get in touch</a>
+    {% endif %}
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow"><span class="dot"></span> available for internships &amp; projects</span>
+      <h1>{{ profile.full_name|default:"Muhammad Ayan Abbasi" }}
+        <span class="line2">building with code &amp; data.</span>
+      </h1>
+      <div class="hero-role">
+        <span id="role-typer" data-roles='{{ roles_json }}'></span><span class="caret"></span>
+      </div>
+      <p class="hero-tagline">{{ profile.tagline|default:"Intermediate Computer Science student, learning to turn ideas into working software and messy data into clear answers." }}</p>
+
+      <div class="hero-actions">
+        <a href="#projects" class="btn btn-primary">View projects →</a>
+        <a href="#contact" class="btn btn-ghost">Contact me</a>
+      </div>
+
+      <div class="hero-stats">
+        <div><div class="num">{{ skill_categories.count }}</div><div class="lbl">Skill areas</div></div>
+        <div><div class="num">{{ profile.projects_completed|default:projects.count }}</div><div class="lbl">Projects</div></div>
+        <div><div class="num">{{ profile.years_learning|default:"2" }}+</div><div class="lbl">Years learning</div></div>
+      </div>
+    </div>
+
+    <!-- Rounded VIP Profile Image Container -->
+    <div class="hero-image-column reveal">
+      <div class="rounded-profile-frame">
+        {% if profile.profile_image %}
+          <img src="{{ profile.profile_image.url }}" alt="{{ profile.full_name }}" class="profile-pic" />
+        {% else %}
+          <img src="{% static 'portfolio/images/profile-pic.png' %}" alt="Profile Picture" class="profile-pic" />
+        {% endif %}
+        <div class="picture-glow"></div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-idx">// about</div>
+      <h2 class="sec-title">A quick profile read</h2>
+      <p class="sec-sub">Everything below is pulled live from a single database record — update it once in the admin panel and the whole page follows.</p>
+    </div>
+    <div class="about-grid">
+      <div class="about-card reveal">
+        {% if profile.about %}
+          {{ profile.about|linebreaks }}
+        {% else %}
+          <p>Muhammad Ayan Abbasi is an Intermediate Computer Science student with a strong interest in Python, Django web development, and applied AI &amp; data science. He enjoys building practical, well-structured projects and is comfortable working across Microsoft Word, Excel, and PowerPoint for documentation, analysis, and presentations.</p>
+          <p>Currently focused on strengthening backend development skills with Django and exploring how data science and automation can solve everyday problems.</p>
+        {% endif %}
+      </div>
+      <div class="about-card reveal">
+        <div class="kv-grid">
+          <div class="kv"><div class="k">Location</div><div class="v">{{ profile.location|default:"Pakistan" }}</div></div>
+          <div class="kv"><div class="k">Focus</div><div class="v">Python &amp; Django</div></div>
+          <div class="kv"><div class="k">Field</div><div class="v">AI &amp; Data Science</div></div>
+          <div class="kv"><div class="k">Status</div><div class="v">Intermediate — CS</div></div>
+          <div class="kv"><div class="k">Office tools</div><div class="v">Word, Excel, PPT</div></div>
+          <div class="kv"><div class="k">Email</div><div class="v">{{ profile.email|default:"—" }}</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-idx">// skills</div>
+      <h2 class="sec-title">Toolkit</h2>
+      <p class="sec-sub">Grouped by area — proficiency bars are set per-skill in the admin panel and animate in on scroll.</p>
+    </div>
+    <div class="skills-grid">
+      {% for cat in skill_categories %}
+      <div class="skill-card reveal">
+        <div class="skill-card-head">
+          <span class="icon">{{ cat.icon|default:"▹" }}</span>
+          <h3>{{ cat.name }}</h3>
+        </div>
+        {% for skill in cat.skills.all %}
+        <div class="skill-row">
+          <div class="skill-row-top"><span>{{ skill.name }}</span><span class="pct">{{ skill.proficiency }}%</span></div>
+          <div class="meter"><span style="--w: {{ skill.proficiency }}%;"></span></div>
+        </div>
+        {% endfor %}
+      </div>
+      {% empty %}
+      <p class="sec-sub">Skills will appear here once added in the admin panel.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section id="education">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-idx">// education</div>
+      <h2 class="sec-title">Academic path</h2>
+    </div>
+    <div class="timeline reveal">
+      {% for edu in education %}
+      <div class="tl-item">
+        <div class="tl-year mono">{{ edu.year }}</div>
+        <div class="tl-degree">{{ edu.degree }}</div>
+        <div class="tl-inst">{{ edu.institute }}</div>
+        {% if edu.description %}<div class="tl-desc">{{ edu.description }}</div>{% endif %}
+      </div>
+      {% empty %}
+      <div class="tl-item">
+        <div class="tl-year mono">Present</div>
+        <div class="tl-degree">Intermediate — Computer Science</div>
+        <div class="tl-inst">Add your college details in the admin panel</div>
+      </div>
+      {% endfor %}
+    </div>
+
+    {% if certificates %}
+    <div style="margin-top:56px;">
+      <h3 style="font-size:16px; margin-bottom:18px; color: var(--muted);">Certificates</h3>
+      <div class="cert-list">
+        {% for c in certificates %}
+        <div class="cert-item reveal">
+          <span class="cert-mark">✓</span>
+          <div>
+            <div class="cert-title">{{ c.title }}</div>
+            <div class="cert-meta">{{ c.issuer }}{% if c.year %} · {{ c.year }}{% endif %}</div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-idx">// projects</div>
+      <h2 class="sec-title">Selected work</h2>
+      <p class="sec-sub">Add, edit, or remove projects any time from the admin panel — no code changes needed.</p>
+    </div>
+    <div class="projects-grid">
+      {% for p in projects %}
+      <div class="project-card reveal">
+        <div class="project-thumb">
+          {% if p.image %}<img src="{{ p.image.url }}" alt="{{ p.title }}">{% else %}&lt;/preview&gt;{% endif %}
+        </div>
+        <div class="project-body">
+          <h3>{{ p.title }}</h3>
+          <p>{{ p.summary }}</p>
+          <div class="tech-tags">
+            {% for t in p.tech_list %}<span class="tech-tag">{{ t }}</span>{% endfor %}
+          </div>
+          <div class="project-links">
+            {% if p.project_url %}<a href="{{ p.project_url }}" target="_blank" rel="noopener">Live →</a>{% endif %}
+            {% if p.repo_url %}<a href="{{ p.repo_url }}" target="_blank" rel="noopener">Source →</a>{% endif %}
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <p class="sec-sub">No projects added yet — add your first one in the admin panel and it will show up here automatically.</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <div class="sec-idx">// contact</div>
+      <h2 class="sec-title">Let's work together</h2>
+      <p class="sec-sub">Send a message directly — it's saved straight to the database and visible in the admin panel.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <div class="contact-row"><span class="lbl">Email</span> {{ profile.email|default:"add in admin" }}</div>
+        <div class="contact-row"><span class="lbl">Phone</span> {{ profile.phone|default:"add in admin" }}</div>
+        <div class="contact-row"><span class="lbl">Location</span> {{ profile.location|default:"add in admin" }}</div>
+        <div class="social-row">
+          {% if profile.github_url %}<a href="{{ profile.github_url }}" target="_blank" rel="noopener">GitHub</a>{% endif %}
+          {% if profile.linkedin_url %}<a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener">LinkedIn</a>{% endif %}
+          {% if profile.whatsapp_url %}<a href="{{ profile.whatsapp_url }}" target="_blank" rel="noopener">WhatsApp</a>{% endif %}
+          {% if profile.instagram_url %}<a href="{{ profile.instagram_url }}" target="_blank" rel="noopener">Instagram</a>{% endif %}
+        </div>
+      </div>
+      <div class="form-panel reveal">
+        {% if messages %}
+          {% for m in messages %}
+            <div class="form-msg {{ m.tags }}">{{ m }}</div>
+          {% endfor %}
+        {% endif %}
+        <form method="post" action="{% url 'index' %}#contact">
+          {% csrf_token %}
+          <div class="form-row"><label for="name">Name</label><input type="text" id="name" name="name" required></div>
+          <div class="form-row"><label for="email">Email</label><input type="email" id="email" name="email" required></div>
+          <div class="form-row"><label for="subject">Subject</label><input type="text" id="subject" name="subject"></div>
+          <div class="form-row"><label for="message">Message</label><textarea id="message" name="message" rows="5" required></textarea></div>
+          <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">Send message →</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© {% now "Y" %} {{ profile.full_name|default:"Muhammad Ayan Abbasi" }}. Built with Django.</span>
+    <span class="mono">status: online</span>
+  </div>
+</footer>
+
+{% endblock %}
