@@ -56,7 +56,6 @@ ROOT_URLCONF = 'ayan_portfolio.urls'
 
 TEMPLATES = [
     {
-        # FIX: '.django.' yahan add kar diya gaya hai
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
@@ -132,8 +131,8 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-# WhiteNoise storage optimization for production
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# FIX: Local dev mai missing manifest ki waja se WSGI error rokne ke liye
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
