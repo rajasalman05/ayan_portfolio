@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 set -o errexit
 
-# Force pip to bypass PEP 668 externally managed environment restriction
+# Add user bin to PATH
+export PATH=$PATH:/vercel/.local/bin
+
+# Install requirements
 python3 -m pip install --break-system-packages --user -r requirements.txt
 
 # Collect static files
