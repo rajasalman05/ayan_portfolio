@@ -1,25 +1,14 @@
 {
-  "version": 2,
-  "builds": [
+  "buildCommand": "./build.sh",
+  "outputDirectory": "staticfiles",
+  "rewrites": [
     {
-      "src": "ayan_portfolio/wsgi.py",
-      "use": "@vercel/python",
-      "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
+      "source": "/static/(.*)",
+      "destination": "/static/$1"
     },
     {
-      "src": "build.sh",
-      "use": "@vercel/static-build",
-      "config": { "distDir": "staticfiles" }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "ayan_portfolio/wsgi.py"
+      "source": "/(.*)",
+      "destination": "ayan_portfolio/wsgi.py"
     }
   ]
 }
