@@ -3,11 +3,7 @@
   "builds": [
     {
       "src": "ayan_portfolio/wsgi.py",
-      "use": "@vercel/python",
-      "config": {
-        "maxLambdaSize": "15mb",
-        "runtime": "python3.12"
-      }
+      "use": "@vercel/python"
     },
     {
       "src": "build.sh",
@@ -20,11 +16,7 @@
   "routes": [
     {
       "src": "/static/(.*)",
-      "dest": "/static/$1"
-    },
-    {
-      "src": "/media/(.*)",
-      "dest": "/media/$1"
+      "dest": "staticfiles/$1"
     },
     {
       "src": "/(.*)",
