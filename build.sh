@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 set -o errexit
 
-python3 -m pip install --break-system-packages --user -r requirements.txt
-python3 manage.py collectstatic --no-input --clear
+# Install dependencies in standard global environment inside Vercel container
+pip install -r requirements.txt
+
+# Run collectstatic to generate staticfiles folder
+python manage.py collectstatic --no-input --clear
