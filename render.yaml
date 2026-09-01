@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: ayan-portfolio
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn ayan_portfolio.wsgi:application"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.0
+      - key: DEBUG
+        value: "False"
+      - key: SECRET_KEY
+        generateValue: true
