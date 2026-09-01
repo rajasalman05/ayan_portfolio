@@ -1,14 +1,25 @@
 {
-  "buildCommand": "./build.sh",
-  "outputDirectory": "staticfiles",
-  "rewrites": [
+  "builds": [
     {
-      "source": "/static/(.*)",
-      "destination": "/static/$1"
+      "src": "ayan_portfolio/wsgi.py",
+      "use": "@vercel/python"
     },
     {
-      "source": "/(.*)",
-      "destination": "ayan_portfolio/wsgi.py"
+      "src": "build.sh",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "staticfiles"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/static/(.*)",
+      "dest": "/static/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "ayan_portfolio/wsgi.py"
     }
   ]
 }
