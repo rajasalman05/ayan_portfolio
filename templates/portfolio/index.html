@@ -13,7 +13,7 @@
       <a href="#contact">contact</a>
     </div>
     {% if profile.cv_file %}
-      <a href="{{ profile.cv_file.url }}" class="nav-cta" download="Muhammad_Ayan_Abbasi_CV.pdf">Download CV</a>
+      <a href="{% static 'portfolio/cv/Muhammad_Ayan_Abbasi_CV.pdf' %}" class="nav-cta" download="Muhammad_Ayan_Abbasi_CV.pdf">Download CV</a>
     {% else %}
       <a href="#contact" class="nav-cta">Get in touch</a>
     {% endif %}
