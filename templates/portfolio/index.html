@@ -44,11 +44,11 @@
       </div>
     </div>
 
-    <!-- Rounded VIP Profile Image Container -->
+    <!-- Rounded VIP Profile Image Container (FIXED FIELD NAME) -->
     <div class="hero-image-column reveal">
       <div class="rounded-profile-frame">
-        {% if profile.profile_image %}
-          <img src="{{ profile.profile_image.url }}" alt="{{ profile.full_name }}" class="profile-pic" />
+        {% if profile.profile_photo %}
+          <img src="{{ profile.profile_photo.url }}" alt="{{ profile.full_name }}" class="profile-pic" />
         {% else %}
           <img src="{% static 'portfolio/images/profile-pic.png' %}" alt="Profile Picture" class="profile-pic" />
         {% endif %}
@@ -231,6 +231,16 @@
     </div>
   </div>
 </section>
+
+<!-- Floating WhatsApp Button -->
+{% if profile.whatsapp_url %}
+  <a href="{{ profile.whatsapp_url }}" target="_blank" rel="noopener" class="whatsapp-float">
+    <i class="fab fa-whatsapp"></i>
+  </a>
+{% endif %}
+
+<!-- FontAwesome Icons for WhatsApp Button -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <footer>
   <div class="wrap">
