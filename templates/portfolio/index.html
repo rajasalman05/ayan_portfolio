@@ -12,6 +12,16 @@
       <a href="#projects">projects</a>
       <a href="#contact">contact</a>
     </div>
+    
+    <!-- Theme Toggle Button -->
+    <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle theme">
+      <span class="theme-toggle__thumb">
+        <svg id="themeIcon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
+      </span>
+    </button>
+
     {% if profile.cv_file %}
       <a href="{{ profile.cv_file.url }}" class="nav-cta" download="Muhammad_Ayan_Abbasi_CV.pdf">Download CV</a>
     {% else %}
@@ -242,9 +252,6 @@
     <i class="fab fa-whatsapp"></i>
   </a>
 {% endif %}
-
-<!-- FontAwesome Icons for WhatsApp Button -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
 <!-- FontAwesome Icons for WhatsApp Button -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
